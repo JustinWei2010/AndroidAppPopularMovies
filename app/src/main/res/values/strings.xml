@@ -1,4 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- General Strings for Application -->
     <string name="app_name">Popular Movies</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Settings Preferences -->
+    <string name="pref_sort_label">Sort Options</string>
+    <string name="pref_sort_key">sort</string>
+    <string name="pref_sort_label_popular">Popularity</string>
+    <string name="pref_sort_label_rating">Highest-Rated</string>
+    <string name="pref_sort_popular">POPULARITY</string>
+    <string name="pref_sort_rating">RATING</string>
 </resources>

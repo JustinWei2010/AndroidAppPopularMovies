@@ -3,8 +3,8 @@ package com.example.android.popularmovies.url;
 import android.net.Uri;
 
 /**
- * Helper class to create urls.
- */
+* Helper class to create urls.
+        */
 public class URLBuilder {
     private static final String LOG_TAG = URLBuilder.class.getSimpleName();
     //TODO: Insert API_KEY here.
@@ -19,10 +19,10 @@ public class URLBuilder {
             .build()
             .toString();
 
-    public static String getFullPosterURL(final String backdropPath) {
+    public static String getFullPosterURL(final String posterPath) {
         return Uri.parse(POSTER_BASE_URL)
                 .buildUpon()
-                .appendEncodedPath(backdropPath)
+                .appendEncodedPath(posterPath)
                 .build()
                 .toString();
     }

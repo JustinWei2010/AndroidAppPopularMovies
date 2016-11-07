@@ -19,9 +19,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:label="@string/action_settings"
-            android:parentActivityName=".SettingsActivity"
+            android:parentActivityName=".settings.SettingsActivity"
             android:theme="@style/SettingsTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

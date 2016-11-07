@@ -1,4 +1,4 @@
-package com.example.android.popularmovies;
+package com.example.android.popularmovies.settings;
 
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -6,11 +6,15 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
+import com.example.android.popularmovies.R;
+
 /**
  * Settings Activity class.
  */
 public class SettingsActivity extends PreferenceActivity implements
         Preference.OnPreferenceChangeListener {
+    private static final String LOG_TAG = SettingsActivity.class.getSimpleName();
+
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

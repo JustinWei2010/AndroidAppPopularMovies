@@ -1,6 +1,8 @@
 package com.example.android.popularmovies;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.example.android.popularmovies.adapter.MovieImageAdapter;
+import com.example.android.popularmovies.settings.SortOptions;
 import com.example.android.popularmovies.json.MovieJSONParser;
 import com.example.android.popularmovies.url.URLBuilder;
 import com.example.android.popularmovies.url.URLConnectionHelper;
@@ -46,14 +49,19 @@ public class PopularMoviesFragment extends Fragment {
     }
 
     private void updateMovieImages() {
-        new FetchMoviesTask().execute();
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
+                getContext());
+        final String sortOption = prefs.getString(getString(R.string.pref_sort_key),
+                getString(R.string.pref_sort_popular));
+        new FetchMoviesTask().execute(sortOption);
     }
 
     private class FetchMoviesTask extends AsyncTask<String, Void, List<String>> {
         @Override
         protected List<String> doInBackground(final String... params) {
-            final String json = URLConnectionHelper.getJsonFromURL(
-                    URLBuilder.fetchTopMoviesURLName);
+            final String sortOption = params[0];
+            final String json = URLConnectionHelper.getJsonFromURL(URLBuilder.getMovieListURLName(
+                    SortOptions.getSortOptionPath(sortOption)));
             return MovieJSONParser.getPosterPathsFromJson(json);
         }
 

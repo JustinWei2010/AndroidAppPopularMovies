@@ -1,25 +1,30 @@
-package com.example.android.popularmovies;
+package com.example.android.popularmovies.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
- * Created by Justin Wei on 11/6/2016.
+ * Image adapter for movie posters.
  */
-
 public class MovieImageAdapter extends ArrayAdapter {
+    private static final String LOG_TAG = MovieImageAdapter.class.getSimpleName();
+
     private Context mContext;
     private int mLayoutResourceId;
-    private List<Integer> mData;
+    private List<String> mData;
 
-    public MovieImageAdapter(Context context, int layoutResourceId, List data) {
+    public MovieImageAdapter(final Context context, final int layoutResourceId,
+                             final List<String> data) {
         super(context, layoutResourceId, data);
         mContext = context;
         mLayoutResourceId = layoutResourceId;
@@ -31,7 +36,6 @@ public class MovieImageAdapter extends ArrayAdapter {
         return mData.size();
     }
 
-    // create a new ImageView for each item referenced by the Adapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
@@ -40,7 +44,7 @@ public class MovieImageAdapter extends ArrayAdapter {
             convertView = inflater.inflate(mLayoutResourceId, parent, false);
         }
         imageView = (ImageView) convertView;
-        imageView.setImageResource(mData.get(position));
+        Picasso.with(mContext).load(mData.get(position)).into(imageView);
         return imageView;
     }
 }

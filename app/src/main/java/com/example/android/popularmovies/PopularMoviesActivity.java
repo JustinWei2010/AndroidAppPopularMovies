@@ -2,10 +2,12 @@ package com.example.android.popularmovies;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class PopularMoviesActivity extends AppCompatActivity {
+    private static final String LOG_TAG = PopularMoviesActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

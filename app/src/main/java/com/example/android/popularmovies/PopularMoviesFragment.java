@@ -1,46 +1,72 @@
 package com.example.android.popularmovies;
 
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
-import java.util.Arrays;
+import com.example.android.popularmovies.adapter.MovieImageAdapter;
+import com.example.android.popularmovies.json.MovieJSONParser;
+import com.example.android.popularmovies.url.URLBuilder;
+import com.example.android.popularmovies.url.URLConnectionHelper;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class PopularMoviesFragment extends Fragment {
+    private static final String LOG_TAG = PopularMoviesFragment.class.getSimpleName();
+
+    private MovieImageAdapter mMovieImageAdapter;
 
     public PopularMoviesFragment() {
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateMovieImages();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_popular_movies, container, false);
-
-        // references to our images
-        Integer[] mThumbIds = {
-                R.drawable.sample_2, R.drawable.sample_3,
-                R.drawable.sample_4, R.drawable.sample_5,
-                R.drawable.sample_6, R.drawable.sample_7,
-                R.drawable.sample_0, R.drawable.sample_1,
-                R.drawable.sample_2, R.drawable.sample_3,
-                R.drawable.sample_4, R.drawable.sample_5,
-                R.drawable.sample_6, R.drawable.sample_7,
-                R.drawable.sample_0, R.drawable.sample_1,
-                R.drawable.sample_2, R.drawable.sample_3,
-                R.drawable.sample_4, R.drawable.sample_5,
-                R.drawable.sample_6, R.drawable.sample_7
-        };
-
         final GridView gridView = (GridView) rootView.findViewById(R.id.movie_grid_view);
-        gridView.setAdapter(new MovieImageAdapter(rootView.getContext(), R.layout.grid_view_item,
-                Arrays.asList(mThumbIds)));
+        mMovieImageAdapter = new MovieImageAdapter(rootView.getContext(), R.layout.grid_view_item,
+                new LinkedList());
+        gridView.setAdapter(mMovieImageAdapter);
         return rootView;
+    }
+
+    private void updateMovieImages() {
+        new FetchMoviesTask().execute();
+    }
+
+    private class FetchMoviesTask extends AsyncTask<String, Void, List<String>> {
+        @Override
+        protected List<String> doInBackground(final String... params) {
+            final String json = URLConnectionHelper.getJsonFromURL(
+                    URLBuilder.fetchTopMoviesURLName);
+            return MovieJSONParser.getPosterPathsFromJson(json);
+        }
+
+        @Override
+        protected void onPostExecute(final List<String> result) {
+            if (result != null) {
+                mMovieImageAdapter.clear();
+                for (final String backdropPath : result) {
+                    final String posterURL = URLBuilder.getFullPosterURL(backdropPath);
+                    Log.v(LOG_TAG, "weijusti posterURL: " + posterURL);
+                    mMovieImageAdapter.add(posterURL);
+                }
+            }
+        }
     }
 }

@@ -1,17 +1,19 @@
 package com.example.android.popularmovies;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.example.android.popularmovies.adapter.MovieImageAdapter;
+import com.example.android.popularmovies.adapter.MoviePosterAdapter;
+import com.example.android.popularmovies.json.MoviePosterModel;
 import com.example.android.popularmovies.settings.SortOptions;
 import com.example.android.popularmovies.json.MovieJSONParser;
 import com.example.android.popularmovies.url.URLBuilder;
@@ -21,12 +23,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * A placeholder fragment containing a simple view.
+ * Popular movies page fragment class.
  */
 public class PopularMoviesFragment extends Fragment {
     private static final String LOG_TAG = PopularMoviesFragment.class.getSimpleName();
 
-    private MovieImageAdapter mMovieImageAdapter;
+    private MoviePosterAdapter mMoviePosterAdapter;
 
     public PopularMoviesFragment() {
     }
@@ -38,13 +40,23 @@ public class PopularMoviesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_popular_movies, container, false);
         final GridView gridView = (GridView) rootView.findViewById(R.id.movie_grid_view);
-        mMovieImageAdapter = new MovieImageAdapter(rootView.getContext(), R.layout.grid_view_item,
+        mMoviePosterAdapter = new MoviePosterAdapter(rootView.getContext(), R.layout.grid_view_item,
                 new LinkedList());
-        gridView.setAdapter(mMovieImageAdapter);
+        gridView.setAdapter(mMoviePosterAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //final MoviePosterModel model = (MoviePosterModel) mMoviePosterAdapter.getItem(position);
+                final String movieId = view.getTag().toString();
+                final Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
+                intent.putExtra(Intent.EXTRA_TEXT, movieId);
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 
@@ -56,23 +68,22 @@ public class PopularMoviesFragment extends Fragment {
         new FetchMoviesTask().execute(sortOption);
     }
 
-    private class FetchMoviesTask extends AsyncTask<String, Void, List<String>> {
+    private class FetchMoviesTask extends AsyncTask<String, Void, List<MoviePosterModel>> {
         @Override
-        protected List<String> doInBackground(final String... params) {
+        protected List<MoviePosterModel> doInBackground(final String... params) {
             final String sortOption = params[0];
-            final String json = URLConnectionHelper.getJsonFromURL(URLBuilder.getMovieListURLName(
-                    SortOptions.getSortOptionPath(sortOption)));
-            return MovieJSONParser.getPosterPathsFromJson(json);
+            final String url = URLBuilder.getMovieListURLName(
+                    SortOptions.getSortOptionPath(sortOption));
+            final String json = URLConnectionHelper.getJsonFromURL(url);
+            return MovieJSONParser.getPosterModelsFromResultsJSON(json);
         }
 
         @Override
-        protected void onPostExecute(final List<String> result) {
+        protected void onPostExecute(final List<MoviePosterModel> result) {
             if (result != null) {
-                mMovieImageAdapter.clear();
-                for (final String backdropPath : result) {
-                    final String posterURL = URLBuilder.getFullPosterURL(backdropPath);
-                    Log.v(LOG_TAG, "weijusti posterURL: " + posterURL);
-                    mMovieImageAdapter.add(posterURL);
+                mMoviePosterAdapter.clear();
+                for (final MoviePosterModel model : result) {
+                    mMoviePosterAdapter.add(model);
                 }
             }
         }

@@ -18,12 +18,12 @@ public class SettingsActivity extends PreferenceActivity implements
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.general_preferences);
+        addPreferencesFromResource(R.xml.gen_prefs);
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_sort_key)));
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object value) {
+    public boolean onPreferenceChange(final Preference preference, final Object value) {
         String stringValue = value.toString();
 
         if (preference instanceof ListPreference) {
@@ -46,7 +46,7 @@ public class SettingsActivity extends PreferenceActivity implements
      * Also fires the listener once, to initialize the summary (so it shows up before the value
      * is changed.)
      */
-    private void bindPreferenceSummaryToValue(Preference preference) {
+    private void bindPreferenceSummaryToValue(final Preference preference) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(this);
 

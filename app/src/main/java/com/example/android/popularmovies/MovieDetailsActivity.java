@@ -9,18 +9,18 @@ import android.view.MenuItem;
 import com.example.android.popularmovies.settings.SettingsActivity;
 
 /**
- * Popular movie posters page.
- */
-public class PopularMoviesActivity extends AppCompatActivity {
-    private static final String LOG_TAG = PopularMoviesActivity.class.getSimpleName();
+ * Movie details page activity class.
+*/
+public class MovieDetailsActivity extends AppCompatActivity {
+    private static final String LOG_TAG = MovieDetailsActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_popular_movies);
+        setContentView(R.layout.activity_movie_details);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PopularMoviesFragment())
+                    .add(R.id.container, new MovieDetailsFragment())
                     .commit();
         }
     }

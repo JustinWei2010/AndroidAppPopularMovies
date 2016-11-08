@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- General Strings for Application -->
+    <!-- General Application Strings -->
     <string name="app_name">Popular Movies</string>
     <string name="action_settings">Settings</string>
+    <string name="action_movie_details">Movie Details</string>
 
     <!-- Settings Preferences -->
     <string name="pref_sort_label">Sort Options</string>

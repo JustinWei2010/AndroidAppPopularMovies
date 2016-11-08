@@ -2,7 +2,6 @@ package com.example.android.popularmovies;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -13,14 +12,10 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.android.popularmovies.adapter.MoviePosterAdapter;
-import com.example.android.popularmovies.model.MoviePosterModel;
 import com.example.android.popularmovies.settings.SortOptions;
-import com.example.android.popularmovies.json.MovieJSONParser;
-import com.example.android.popularmovies.url.URLBuilder;
-import com.example.android.popularmovies.url.URLConnectionHelper;
+import com.example.android.popularmovies.task.RenderMoviePostersTask;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Popular movies page fragment class.
@@ -62,27 +57,9 @@ public class PopularMoviesFragment extends Fragment {
     private void updateMovieImages() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                 getContext());
-        final String sortOption = prefs.getString(getString(R.string.pref_sort_key), getString(R.string.pref_sort_popular));
-        new FetchMoviesTask().execute(SortOptions.getSortOptionPath(sortOption));
-    }
-
-    private class FetchMoviesTask extends AsyncTask<String, Void, List<MoviePosterModel>> {
-        @Override
-        protected List<MoviePosterModel> doInBackground(final String... params) {
-            final String path = params[0];
-            final String json = URLConnectionHelper.getJsonFromURL(
-                    URLBuilder.getMovieApiURL(path));
-            return MovieJSONParser.getPosterModelsFromResultsJSON(json);
-        }
-
-        @Override
-        protected void onPostExecute(final List<MoviePosterModel> result) {
-            if (result != null) {
-                mMoviePosterAdapter.clear();
-                for (final MoviePosterModel model : result) {
-                    mMoviePosterAdapter.add(model);
-                }
-            }
-        }
+        final String sortOption = prefs.getString(getString(R.string.pref_sort_key),
+                getString(R.string.pref_sort_popular));
+        new RenderMoviePostersTask(mMoviePosterAdapter).execute(SortOptions.getSortOptionPath(
+                sortOption));
     }
 }

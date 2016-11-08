@@ -1,4 +1,4 @@
-package com.example.android.popularmovies.json;
+package com.example.android.popularmovies.model;
 
 /**
  * Model for storing tag and image path for movie poster.
@@ -21,6 +21,6 @@ public class MoviePosterModel {
     }
 
     public String toString() {
-        return String.format("Tag: %s\n ImagePath: %s\n", mMovieId, mImagePath);
+        return String.format("Tag: %s\nImagePath: %s\n", mMovieId, mImagePath);
     }
 }

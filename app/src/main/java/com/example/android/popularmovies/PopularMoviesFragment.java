@@ -13,7 +13,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.android.popularmovies.adapter.MoviePosterAdapter;
-import com.example.android.popularmovies.json.MoviePosterModel;
+import com.example.android.popularmovies.model.MoviePosterModel;
 import com.example.android.popularmovies.settings.SortOptions;
 import com.example.android.popularmovies.json.MovieJSONParser;
 import com.example.android.popularmovies.url.URLBuilder;
@@ -50,7 +50,6 @@ public class PopularMoviesFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //final MoviePosterModel model = (MoviePosterModel) mMoviePosterAdapter.getItem(position);
                 final String movieId = view.getTag().toString();
                 final Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
                 intent.putExtra(Intent.EXTRA_TEXT, movieId);
@@ -63,18 +62,16 @@ public class PopularMoviesFragment extends Fragment {
     private void updateMovieImages() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                 getContext());
-        final String sortOption = prefs.getString(getString(R.string.pref_sort_key),
-                getString(R.string.pref_sort_popular));
-        new FetchMoviesTask().execute(sortOption);
+        final String sortOption = prefs.getString(getString(R.string.pref_sort_key), getString(R.string.pref_sort_popular));
+        new FetchMoviesTask().execute(SortOptions.getSortOptionPath(sortOption));
     }
 
     private class FetchMoviesTask extends AsyncTask<String, Void, List<MoviePosterModel>> {
         @Override
         protected List<MoviePosterModel> doInBackground(final String... params) {
-            final String sortOption = params[0];
-            final String url = URLBuilder.getMovieListURLName(
-                    SortOptions.getSortOptionPath(sortOption));
-            final String json = URLConnectionHelper.getJsonFromURL(url);
+            final String path = params[0];
+            final String json = URLConnectionHelper.getJsonFromURL(
+                    URLBuilder.getMovieApiURL(path));
             return MovieJSONParser.getPosterModelsFromResultsJSON(json);
         }
 

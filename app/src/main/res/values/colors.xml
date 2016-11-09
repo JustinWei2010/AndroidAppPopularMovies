@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- AppTheme colors -->
     <color name="colorPrimary">#212121</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <!-- Specific element colors -->
+    <color name="colorGoodRating">#006400</color>
+    <color name="colorDecentRating">#999900</color>
+    <color name="colorBadRating">#DC143C</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorTeal">#009688</color>
 </resources>

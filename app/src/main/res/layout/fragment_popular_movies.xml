@@ -5,13 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".PopularMoviesFragment" >
 
-    <GridView
-        android:id="@+id/movie_grid_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:columnWidth="180dp"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
-        android:gravity="center" />
+    <GridView android:id="@+id/movie_grid_view"
+            style="@style/PopularMoviesGridView" />
 
 </FrameLayout>

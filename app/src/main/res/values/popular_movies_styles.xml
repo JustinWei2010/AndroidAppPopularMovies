@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Popular movies individual component styles -->
+    <style name="PopularMoviesGridView">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:numColumns">2</item>
+        <item name="android:stretchMode">columnWidth</item>
+    </style>
+
+    <style name="PopularMoviesGridViewItem">
+        <item name="android:layout_width">@dimen/movie_poster_width</item>
+        <item name="android:layout_height">@dimen/movie_poster_height</item>
+    </style>
+</resources>

@@ -3,4 +3,14 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Popular Movies screen dimensions -->
+    <dimen name="movie_poster_width">185dp</dimen>
+    <dimen name="movie_poster_height">277dp</dimen>
+
+    <!-- Movie Details screen dimensions -->
+    <dimen name="movie_details_title_size">20sp</dimen>
+    <dimen name="movie_details_user_ratings_width">50sp</dimen>
+    <dimen name="movie_details_large_padding">20dp</dimen>
+    <dimen name="movie_details_small_padding">5dp</dimen>
 </resources>

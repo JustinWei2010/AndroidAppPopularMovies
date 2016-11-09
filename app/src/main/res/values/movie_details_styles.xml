@@ -1,0 +1,74 @@
+
+<resources>
+    <!-- DetailsPage container styles -->
+    <style name="DetailsPageMainContainer">
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:weightSum">10</item>
+    </style>
+
+    <style name="DetailsPageHeaderContainer">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@color/colorTeal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">2.5</item>
+        <item name="android:paddingLeft">@dimen/movie_details_large_padding</item>
+    </style>
+
+    <style name="DetailsPageBody1Container">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/movie_details_large_padding</item>
+        <item name="android:paddingTop">@dimen/movie_details_small_padding</item>
+        <item name="android:paddingBottom">@dimen/movie_details_large_padding</item>
+        <item name="android:weightSum">4</item>
+    </style>
+
+    <style name="DetailsPageBody1LeftContainer">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">2</item>
+    </style>
+
+    <!-- DetailsPage individual component styles -->
+    <style name="DetailsPageMovieTitle">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/movie_details_title_size</item>
+    </style>
+
+    <style name="DetailsPageMovieUserRating">
+        <item name="android:background">@drawable/user_ratings_container</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">@dimen/movie_details_user_ratings_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/movie_details_large_padding</item>
+    </style>
+
+    <style name="DetailsPageMovieThumbnail">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
+
+    <style name="DetailsPageMovieReleaseDate">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DetailsPageMovieOverview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/movie_details_large_padding</item>
+        <item name="android:paddingRight">@dimen/movie_details_large_padding</item>
+    </style>
+</resources>

@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MovieDetailsFragment">
 
-    <LinearLayout style="@style/DetailsPageMainContainer">
-        <LinearLayout style="@style/DetailsPageHeaderContainer">
+    <ScrollView style="@style/DetailsPageMainScrollContainer">
+        <LinearLayout style="@style/DetailsPageMainContainer">
             <TextView android:id="@+id/movie_title"
                 style="@style/DetailsPageMovieTitle" />
 
-            <TextView android:id="@+id/movie_user_rating"
-                style="@style/DetailsPageMovieUserRating"/>
-        </LinearLayout>
-
-        <LinearLayout style="@style/DetailsPageBody1Container">
-            <LinearLayout style="@style/DetailsPageBody1LeftContainer">
+            <LinearLayout style="@style/DetailsPageBodyContainer">
+                <LinearLayout style="@style/DetailsPageBodyLeftContainer">
                     <ImageView android:id="@+id/movie_poster_thumbnail"
                         style="@style/DetailsPageMovieThumbnail"/>
 
                     <TextView android:id="@+id/movie_release_date"
                         style="@style/DetailsPageMovieReleaseDate"/>
+                </LinearLayout>
+                <LinearLayout style="@style/DetailsPageBodyRightContainer">
+                    <TextView android:id="@+id/movie_user_rating"
+                        style="@style/DetailsPageMovieUserRating"/>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <TextView android:id="@+id/movie_overview"
-            style="@style/DetailsPageMovieOverview"/>
-    </LinearLayout>
-</LinearLayout>
+            <TextView android:id="@+id/movie_overview"
+                style="@style/DetailsPageMovieOverview"/>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -10,7 +10,6 @@
 
     <!-- Movie Details screen dimensions -->
     <dimen name="movie_details_title_size">20sp</dimen>
-    <dimen name="movie_details_user_ratings_width">50sp</dimen>
     <dimen name="movie_details_large_padding">20dp</dimen>
     <dimen name="movie_details_small_padding">5dp</dimen>
 </resources>

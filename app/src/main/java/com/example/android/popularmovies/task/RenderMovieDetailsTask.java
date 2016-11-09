@@ -22,6 +22,8 @@ public class RenderMovieDetailsTask extends AsyncTask<String, Void, MovieDetails
     private static final String LOG_TAG = RenderMovieDetailsTask.class.getSimpleName();
     private static final double GOOD_RATING_THRESHOLD = 7.0;
     private static final double BAD_RATING_THRESHOLD = 5.0;
+    private static final String RATING_DELIMITER = "/";
+    private static final int MAX_RATING = 10;
 
     private Context mContext;
     private View mView;
@@ -50,8 +52,10 @@ public class RenderMovieDetailsTask extends AsyncTask<String, Void, MovieDetails
 
             //Set user ratings
             final TextView userRatingView = ((TextView)mView.findViewById(R.id.movie_user_rating));
-            userRatingView.setText(model.getUserRating());
+            final String userRating = model.getUserRating();
+            userRatingView.setText(userRating);
             setColorForUserRatings(userRatingView);
+            userRatingView.setText(getFormattedUserRatings(userRating));
 
             //Set thumbnail picture
             final String posterURL = URLBuilder.getMoviePosterURL(model.getImagePath());
@@ -63,6 +67,10 @@ public class RenderMovieDetailsTask extends AsyncTask<String, Void, MovieDetails
 
     private String getFormattedReleaseDate(final String releaseDate) {
         return releaseDate.replaceAll("-", ".");
+    }
+
+    private String getFormattedUserRatings(final String userRatings) {
+        return userRatings + RATING_DELIMITER + MAX_RATING;
     }
 
     private void setColorForUserRatings(final TextView textView) {

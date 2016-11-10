@@ -50,7 +50,6 @@ public class MoviePosterAdapter extends ArrayAdapter {
         final MoviePosterModel model = mData.get(position);
         imageView.setTag(model.getMovieId());
         final String posterURL = URLBuilder.getMoviePosterURL(model.getImagePath());
-        Log.v(LOG_TAG, "weijusti posterURL: " + posterURL);
         Picasso.with(mContext).load(posterURL).into(imageView);
         return imageView;
     }

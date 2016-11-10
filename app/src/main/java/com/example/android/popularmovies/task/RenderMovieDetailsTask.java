@@ -36,9 +36,15 @@ public class RenderMovieDetailsTask extends AsyncTask<String, Void, MovieDetails
     @Override
     protected MovieDetailsModel doInBackground(final String... params) {
         final String movieId = params[0];
-        final String json = URLConnectionHelper.getJsonFromURL(
-                URLBuilder.getMovieApiURL(movieId));
-        return MovieJSONParser.getDetailModelsFromMovieJSON(json);
+
+        if (URLConnectionHelper.isDeviceOnline(mContext)) {
+            final String json = URLConnectionHelper.getJsonFromURL(
+                    URLBuilder.getMovieApiURL(movieId));
+            return MovieJSONParser.getDetailModelsFromMovieJSON(json);
+        } else {
+            Log.e(LOG_TAG, "Device is not currently connected to internet.");
+            return null;
+        }
     }
 
     @Override
@@ -59,9 +65,10 @@ public class RenderMovieDetailsTask extends AsyncTask<String, Void, MovieDetails
 
             //Set thumbnail picture
             final String posterURL = URLBuilder.getMoviePosterURL(model.getImagePath());
-            Log.v(LOG_TAG, "weijusti posterURL: " + posterURL);
             final ImageView imageView = (ImageView) mView.findViewById(R.id.movie_poster_thumbnail);
             Picasso.with(mContext).load(posterURL).into(imageView);
+        } else {
+            Log.e(LOG_TAG, "No results returned from call to movie api.");
         }
     }
 

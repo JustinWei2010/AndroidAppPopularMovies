@@ -1,5 +1,8 @@
 package com.example.android.popularmovies.url;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -51,7 +54,13 @@ public class URLConnectionHelper {
                 }
             }
         }
-        Log.v(LOG_TAG, "weijusti json: " + json);
         return json;
+    }
+
+    public static boolean isDeviceOnline(final Context activityContext) {
+        final ConnectivityManager cm = (ConnectivityManager) activityContext.getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

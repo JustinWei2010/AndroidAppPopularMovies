@@ -59,7 +59,7 @@ public class PopularMoviesFragment extends Fragment {
                 getContext());
         final String sortOption = prefs.getString(getString(R.string.pref_sort_key),
                 getString(R.string.pref_sort_popular));
-        new RenderMoviePostersTask(mMoviePosterAdapter).execute(SortOptions.getSortOptionPath(
-                sortOption));
+        new RenderMoviePostersTask(getContext(), mMoviePosterAdapter).execute(
+                SortOptions.getSortOptionPath(sortOption));
     }
 }

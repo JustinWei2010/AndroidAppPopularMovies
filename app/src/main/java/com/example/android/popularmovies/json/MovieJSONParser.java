@@ -1,5 +1,6 @@
 package com.example.android.popularmovies.json;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.android.popularmovies.model.MovieDetailsModel;
@@ -27,34 +28,42 @@ public class MovieJSONParser {
 
     public static List<MoviePosterModel> getPosterModelsFromResultsJSON(final String jsonStr) {
         final List<MoviePosterModel> moviePosterModels = new LinkedList();
-        try {
-            final JSONObject json = new JSONObject(jsonStr);
-            final JSONArray resultsArray = json.getJSONArray(OWM_RESULTS);
 
-            for (int i = 0; i < resultsArray.length(); i++) {
-                final JSONObject movieJson = resultsArray.getJSONObject(i);
-                final MoviePosterModel model = new MoviePosterModel(
-                        movieJson.getString(OWM_MOVIE_ID), movieJson.getString(OWM_POSTER_PATH));
-                moviePosterModels.add(model);
+        if (!TextUtils.isEmpty(jsonStr)) {
+            try {
+                final JSONObject json = new JSONObject(jsonStr);
+                final JSONArray resultsArray = json.getJSONArray(OWM_RESULTS);
+
+                for (int i = 0; i < resultsArray.length(); i++) {
+                    final JSONObject movieJson = resultsArray.getJSONObject(i);
+                    final MoviePosterModel model = new MoviePosterModel(
+                            movieJson.getString(OWM_MOVIE_ID), movieJson.getString(OWM_POSTER_PATH));
+                    moviePosterModels.add(model);
+                }
+            } catch (final JSONException e) {
+                Log.e(LOG_TAG, "Error while parsing json", e);
             }
-        } catch (final JSONException e) {
-            Log.e(LOG_TAG, "Error while parsing json", e);
+        } else {
+            Log.e(LOG_TAG, "Empty json string passed in");
         }
-        Log.v(LOG_TAG, "weijusti moviePosterModels: " + moviePosterModels);
         return moviePosterModels;
     }
 
     public static MovieDetailsModel getDetailModelsFromMovieJSON(final String jsonStr) {
         MovieDetailsModel movieDetailsModel = null;
-        try {
-            final JSONObject movieJson = new JSONObject(jsonStr);
-            movieDetailsModel = new MovieDetailsModel(movieJson.getString(OWM_ORIGINAL_TITLE),
-                    movieJson.getString(OWM_POSTER_PATH), movieJson.getString(OWM_OVERVIEW),
-                    movieJson.getString(OWM_VOTE_AVERAGE), movieJson.getString(OWM_RELEASE_DATE));
-        } catch (final JSONException e) {
-            Log.e(LOG_TAG, "Error while parsing json", e);
+
+        if (!TextUtils.isEmpty(jsonStr)) {
+            try {
+                final JSONObject movieJson = new JSONObject(jsonStr);
+                movieDetailsModel = new MovieDetailsModel(movieJson.getString(OWM_ORIGINAL_TITLE),
+                        movieJson.getString(OWM_POSTER_PATH), movieJson.getString(OWM_OVERVIEW),
+                        movieJson.getString(OWM_VOTE_AVERAGE), movieJson.getString(OWM_RELEASE_DATE));
+            } catch (final JSONException e) {
+                Log.e(LOG_TAG, "Error while parsing json", e);
+            }
+        } else {
+            Log.e(LOG_TAG, "Empty json string passed in");
         }
-        Log.v(LOG_TAG, "weijusti movieDetailsModel: " + movieDetailsModel);
         return movieDetailsModel;
     }
 }
